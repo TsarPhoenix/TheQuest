@@ -1,0 +1,68 @@
+- name: run terraform script to create all resources needed
+  hosts: localhost
+  tasks:
+    - name: run terraform script
+      terraform:
+        project_path: ../terraform
+
+
+- name: wait for azure and refresh inventory with the new groups #need an inventory refresh once the tags have been put on our vm. 
+  hosts: localhost
+  tasks:
+    - pause:
+        minutes: 1
+    - meta: refresh_inventory
+
+
+- name: Install and setup nodejs and forever
+  hosts: tag_os_ubuntu
+  remote_user: TheQuest
+  become: yes
+  tasks:
+    - name: Add PPA for LTS Nodejs
+      shell: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - #forever doesn't like the version of node installed defaultly by apt. So adding nodesource for 12.x
+      args:
+        warn: no
+    - name: Install Nodejs
+      apt:
+        name: nodejs
+        state: latest
+    - name: Install Forever #Starting up a nodejs app just using the node <filename> catptures the console. So to start up a node app in the background I found forever.
+      command: npm install forever -g
+
+
+- name: Move node files and start the file w/ forever
+  hosts: tag_os_ubuntu
+  remote_user: TheQuest
+  become: yes
+  tasks:
+    - name: Check directory
+      stat:
+        path: /sw/nodejs/
+      register: folder
+    - name: alert if directory already existed
+      debug:
+        msg: "The NodeJS directory already exists!"
+      when: folder.stat.exists
+    - name: Create folder if it doesn't exist
+      file:
+        path: /sw/nodejs/
+        state: directory
+        mode: 0755
+        group: TheQuest
+        owner: TheQuest
+      when: folder.stat.exists == false
+    - name: copy nodejs file to server
+      copy:
+        src:  ~/TheQuest/nodeFiles/echoArgs.js
+        dest: /sw/nodejs/echoArgs.js
+        owner: root
+        group: root
+        mode: 0644
+    - name: CHedck list of Nodejs apps.
+      command: forever list
+      register: forever_list
+      changed_when: false
+    - name: Start application /w Forever
+      command: forever start /sw/nodejs/echoArgs.js "{{ node_args }}" 
+      when: "forever_list.stdout.find('/sw/nodejs/echoArgs.js') ==-1"

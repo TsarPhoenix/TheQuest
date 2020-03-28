@@ -1,0 +1,8 @@
+- 
+  hosts: localhost
+  name: "Teardown via Terraform"
+  tasks: 
+    - name: destroy
+      terraform:
+        project_path: ~/TheQuest/terraform/
+        state: absent
