@@ -9,13 +9,15 @@ Acceptance Criteria:
   - All resources should be contained within a resource group in Azure
 
 Tools:
-  Ansible
-  Terraform
+  Ansible *
+  Terraform *
   NodeJS
   Forever
   .sh
   ssh (to get into ubuntu machine used to run everything)
   Azure
+  
+  Ansible and Terraform are required on the server the sh scripts are run on.
 
 Why: To get an idea for the types of issues involved with a project such as the Golden Pipeline.
 
