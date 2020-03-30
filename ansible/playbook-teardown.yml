@@ -4,5 +4,5 @@
   tasks: 
     - name: destroy
       terraform:
-        project_path: ~/TheQuest/terraform/
+        project_path: ../terraform/
         state: absent

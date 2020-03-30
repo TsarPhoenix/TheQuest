@@ -64,5 +64,5 @@
       register: forever_list
       changed_when: false
     - name: Start application /w Forever
-      command: forever start /sw/nodejs/echoArgs.js "{{ node_args }}" 
+      command: forever start /sw/nodejs/echoArgs.js {{ node_args }} 
       when: "forever_list.stdout.find('/sw/nodejs/echoArgs.js') ==-1"
