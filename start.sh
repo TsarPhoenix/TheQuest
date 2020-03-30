@@ -25,6 +25,11 @@ inventory_file=./ansible/azure_rm.yml
 playbook_file=./ansible/playbook-theQuest.yml
 ansible_vault_password=TheQuest2
 
+#terraform init for first runs
+cd ${terraform_directory}
+terraform init
+cd ..
+
 #create vault-password-file using a reasonible password
 echo ${ansible_vault_password} >> ${ansible_vault_path}
 
@@ -41,7 +46,7 @@ cd ${quest_directory}
 
 #cleanup
   #remove old var files
-  #rm ${group_vars_ubuntu_file}
-  #rm ${group_vars_all_file}
-  #rm ${ansible_vault_path}
+  rm ${group_vars_ubuntu_file}
+  rm ${group_vars_all_file}
+  rm ${ansible_vault_path}
   
