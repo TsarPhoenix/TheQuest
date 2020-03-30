@@ -78,6 +78,8 @@ Setup:
     AZURE_SECRET
     AZURE_SUBSCRIPTION_ID
     AZURE_TENANT
+    
+    logout and log back in to have the env vars be picked up
 
 Script Descriptions:
   start.sh
