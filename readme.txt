@@ -19,7 +19,7 @@ Tools:
   
   Ansible and Terraform are required on the server the sh scripts are run on.
 
-Why: To get an idea for the types of issues involved with a project such as the Golden Pipeline.
+Why: To get an idea for the types of issues involved with a project that would involve the various tools used here.
 
 Setup:
   #pull repo in
