@@ -38,3 +38,5 @@ chmod +x ~/TheQuest/teardown.sh
 #all that's left is to set the env variables at /etc/environment
 #and to go to /etc/ansible/ansbile.cfg and uncomment the line that says "host_key_checking = False"
 #also restart the session
+
+sudo rm terraform_0.12.24_linux_amd64.zip
