@@ -22,44 +22,12 @@ Tools:
 Why: To get an idea for the types of issues involved with a project such as the Golden Pipeline.
 
 Setup:
-  #install ansible
-  sudo apt-add-repository ppa:ansible/ansible
-
-  sudo apt-get update
-
-  sudo apt-get install ansible -y
-
-
-  #install terraform
-  sudo apt-get install wget unzip
-
-  sudo wget https://releases.hashicorp.com/terraform/0.12.2/terraform_0.12.2_linux_amd64.zip
-
-  sudo unzip terraform_0.12.2_linux_amd64.zip -d /usr/local/bin
-
-  #install azure cli
-  sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg\
-
-  curl -sL https://packages.microsoft.com/keys/microsoft.asc | 
-      gpg --dearmor | 
-      sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
-
-  AZ_REPO=$(lsb_release -cs)
-  echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | 
-      sudo tee /etc/apt/sources.list.d/azure-cli.list
-
-  sudo apt-get update
-
-  sudo apt-get install azure-cli
-
-  az login
-
   #pull repo in
   git clone https://github.com/TsarPhoenix/TheQuest.git  {enter credentials}
 
-  #set exe permissions
-  chmod +x start.sh
-  chmod +x teardown.sh
+  chmod +x vmSetup.sh
+
+  run ./vmSetup.sh and accept the prompts
 
   #set environment variables
   sudo vim /etc/environment
@@ -94,6 +62,11 @@ Script Descriptions:
       ./teardown.sh
     Explaination:
       This script calls an ansible playbook to run a terraform destroy on the same resources created by the start.sh script. This effectivly neutralizes everything the start.sh script creates.
+  vmSetup.sh
+    Usage:
+      ./vmSetup.sh
+    Explaination:
+      Runs simple install commands and gives execution permissions on the other scripts mentioned above.
 
 Misc:
   Terraform:
